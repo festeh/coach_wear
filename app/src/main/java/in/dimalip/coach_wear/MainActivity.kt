@@ -12,8 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.background
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import `in`.dimalip.coach_wear.ui.theme.Coach_wearTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +23,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Coach_wearTheme {
-                Greeting(name = "Android")
+                androidx.compose.foundation.layout.Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize().background(Color.White)
+                ) {
+                    Greeting(name = "Android")
+                }
             }
         }
     }
@@ -29,15 +36,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    androidx.compose.foundation.layout.Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(
-            text = "Hello $name!",
-            modifier = modifier.padding(16.dp)
-        )
-    }
+    Text(
+        text = "Hello $name!",
+        color = Color.Black,
+        modifier = modifier.padding(16.dp)
+    )
 }
 
 @Preview(showBackground = true)
