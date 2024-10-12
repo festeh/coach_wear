@@ -39,7 +39,7 @@ fun MainContent() {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         FocusButton(count)
-        CounterMenu(
+        FocusTime(
             count = count,
             onIncrement = { if (count < 95) count += 5 },
             onDecrement = { if (count > 5) count -= 5 }
@@ -65,7 +65,7 @@ fun FocusButton(count: Int) {
 }
 
 @Composable
-fun CounterMenu(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
+fun FocusTime(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
