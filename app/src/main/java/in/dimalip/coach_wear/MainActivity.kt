@@ -39,20 +39,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
         color = Color.Black,
-        modifier = modifier.padding(16.dp),
-        softWrap = true
     )
-}
-
-@Preview(showBackground = true, widthDp = 200, heightDp = 200)
-@Composable
-fun GreetingPreview() {
-    Coach_wearTheme {
-        androidx.compose.foundation.layout.Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize().background(Color.White)
-        ) {
-            Greeting("Android")
-        }
-    }
 }
