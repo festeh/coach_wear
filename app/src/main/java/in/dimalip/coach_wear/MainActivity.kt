@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,13 +32,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainContent() {
-    var count by remember { mutableStateOf(5) }
+    var count by remember { mutableIntStateOf(5) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        RoundButton(count)
+        FocusButton(count)
         CounterMenu(
             count = count,
             onIncrement = { if (count < 95) count += 5 },
@@ -48,11 +48,13 @@ fun MainContent() {
 }
 
 @Composable
-fun RoundButton(count: Int) {
-    Button(
+fun FocusButton(count: Int) {
+    TextButton(
         onClick = { Log.d("RoundButton", "Current value: $count") },
-        shape = CircleShape,
-        modifier = Modifier.size(80.dp),
+        shape = RoundedCornerShape(
+           20
+        ),
+        modifier = Modifier.size(60.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
     ) {
         Text(
@@ -68,12 +70,16 @@ fun CounterMenu(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Button(onClick = onDecrement, modifier = Modifier.size(40.dp)) {
-            Text("-")
+        TextButton(onClick = onDecrement, modifier = Modifier.size(40.dp), colors =  ButtonDefaults.textButtonColors(
+            contentColor = Color.Red, containerColor = Color.Blue
+        )) {
+            Text("-", color = Color.White)
         }
-        Text(text = count.toString(), modifier = Modifier.widthIn(min = 40.dp))
-        Button(onClick = onIncrement, modifier = Modifier.size(40.dp)) {
-            Text("+")
+        Text(text = count.toString(), modifier = Modifier.widthIn(min = 40.dp), color = Color.White)
+        TextButton(onClick = onIncrement, modifier = Modifier.size(40.dp), colors =  ButtonDefaults.textButtonColors(
+            contentColor = Color.Red, containerColor = Color.Blue
+        )) {
+            Text("+", color = Color.White)
         }
     }
 }

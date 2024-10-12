@@ -4,6 +4,6 @@
     <style name="Theme.CoachWear" parent="@android:style/Theme.DeviceDefault.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
-        <item name="android:colorBackground">@android:color/white</item>
+        <item name="android:colorBackground">@android:color/black</item>
     </style>
 </resources>
