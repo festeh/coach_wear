@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    RoundButton()
+                    MainContent()
                 }
             }
         }
@@ -35,16 +31,49 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RoundButton() {
+fun MainContent() {
+    var count by remember { mutableStateOf(5) }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        RoundButton(count)
+        CounterMenu(
+            count = count,
+            onIncrement = { if (count < 95) count += 5 },
+            onDecrement = { if (count > 5) count -= 5 }
+        )
+    }
+}
+
+@Composable
+fun RoundButton(count: Int) {
     Button(
-        onClick = { Log.d("RoundButton", "pressed") },
+        onClick = { Log.d("RoundButton", "Current value: $count") },
         shape = CircleShape,
-        modifier = Modifier.size(100.dp),
+        modifier = Modifier.size(80.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
     ) {
         Text(
             text = "DO IT",
             color = Color.White
         )
+    }
+}
+
+@Composable
+fun CounterMenu(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Button(onClick = onDecrement, modifier = Modifier.size(40.dp)) {
+            Text("-")
+        }
+        Text(text = count.toString(), modifier = Modifier.widthIn(min = 40.dp))
+        Button(onClick = onIncrement, modifier = Modifier.size(40.dp)) {
+            Text("+")
+        }
     }
 }
