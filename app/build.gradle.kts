@@ -62,4 +62,7 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    
+    // Add OkHttp dependency
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
