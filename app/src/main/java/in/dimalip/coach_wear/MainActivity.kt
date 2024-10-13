@@ -121,10 +121,11 @@ fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
 }
 
 fun sendWebRequest(focused: Boolean, count: Int) {
+    val baseUrl = BuildConfig.COACH_URL
     val url = if (focused) {
-        "https://foobar.com?focused=true&count=$count"
+        "$baseUrl?focused=true&count=$count"
     } else {
-        "https://foobar.com?focused=false"
+        "$baseUrl?focused=false"
     }
 
     val request = Request.Builder()
