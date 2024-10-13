@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import `in`.dimalip.coach_wear.ui.theme.Coach_wearTheme
 import kotlinx.coroutines.delay
 
@@ -105,6 +106,7 @@ fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
 
     Text(
         text = String.format("%02d:%02d", minutes, seconds),
-        color = Color.White
+        color = Color.White,
+        fontSize = 25.sp
     )
 }
