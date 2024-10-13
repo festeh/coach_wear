@@ -45,7 +45,6 @@ fun MainContent() {
     if (isTimerRunning) {
         TimerScreen(startTime, count) {
             isTimerRunning = false
-            sendWebRequest(false, count)
         }
     } else {
         Column(
@@ -107,12 +106,12 @@ fun TimerScreen(startTime: Instant, durationMinutes: Int, onTimerFinish: () -> U
 
     LaunchedEffect(key1 = startTime) {
         while (true) {
-            delay(1000)
             currentTime = Instant.now()
             if (Duration.between(startTime, currentTime).toMinutes() >= durationMinutes) {
                 onTimerFinish()
                 break
             }
+            delay(1000)
         }
     }
 
