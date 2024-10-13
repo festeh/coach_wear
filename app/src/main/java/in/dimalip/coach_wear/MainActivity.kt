@@ -1,7 +1,6 @@
 package `in`.dimalip.coach_wear
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -13,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import `in`.dimalip.coach_wear.ui.theme.Coach_wearTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,27 +33,30 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainContent() {
     var count by remember { mutableIntStateOf(5) }
+    var isTimerRunning by remember { mutableStateOf(false) }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        FocusButton(count)
-        FocusTime(
-            count = count,
-            onIncrement = { if (count < 95) count += 5 },
-            onDecrement = { if (count > 5) count -= 5 }
-        )
+    if (isTimerRunning) {
+        TimerScreen(count) { isTimerRunning = false }
+    } else {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            FocusButton(count) { isTimerRunning = true }
+            FocusTime(
+                count = count,
+                onIncrement = { if (count < 95) count += 5 },
+                onDecrement = { if (count > 5) count -= 5 }
+            )
+        }
     }
 }
 
 @Composable
-fun FocusButton(count: Int) {
+fun FocusButton(count: Int, onClick: () -> Unit) {
     TextButton(
-        onClick = { Log.d("RoundButton", "Current value: $count") },
-        shape = RoundedCornerShape(
-           20
-        ),
+        onClick = onClick,
+        shape = RoundedCornerShape(20),
         modifier = Modifier.size(60.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
     ) {
@@ -82,4 +85,26 @@ fun FocusTime(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
             Text("+", color = Color.White)
         }
     }
+}
+
+@Composable
+fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
+    var remainingSeconds by remember { mutableIntStateOf(initialMinutes * 60) }
+
+    LaunchedEffect(key1 = remainingSeconds) {
+        if (remainingSeconds > 0) {
+            delay(1000)
+            remainingSeconds--
+        } else {
+            onTimerFinish()
+        }
+    }
+
+    val minutes = remainingSeconds / 60
+    val seconds = remainingSeconds % 60
+
+    Text(
+        text = String.format("%02d:%02d", minutes, seconds),
+        color = Color.White
+    )
 }
