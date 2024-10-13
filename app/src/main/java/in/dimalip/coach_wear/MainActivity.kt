@@ -16,6 +16,8 @@ import `in`.dimalip.coach_wear.ui.theme.Coach_wearTheme
 import kotlinx.coroutines.*
 import okhttp3.*
 import java.io.IOException
+import java.time.Instant
+import java.time.Duration
 
 class MainActivity : ComponentActivity() {
     private val client = OkHttpClient()
@@ -38,11 +40,12 @@ class MainActivity : ComponentActivity() {
 fun MainContent() {
     var count by remember { mutableIntStateOf(5) }
     var isTimerRunning by remember { mutableStateOf(false) }
+    var startTime by remember { mutableStateOf(Instant.now()) }
 
     if (isTimerRunning) {
-        TimerScreen(count) {
+        TimerScreen(startTime, count) {
             isTimerRunning = false
-//            sendWebRequest(false, count)
+            sendWebRequest(false, count)
         }
     } else {
         Column(
@@ -51,6 +54,7 @@ fun MainContent() {
         ) {
             FocusButton(count) {
                 isTimerRunning = true
+                startTime = Instant.now()
                 sendWebRequest(true, count)
             }
             FocusTime(
@@ -98,18 +102,22 @@ fun FocusTime(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
 }
 
 @Composable
-fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
-    var remainingSeconds by remember { mutableIntStateOf(initialMinutes * 60) }
+fun TimerScreen(startTime: Instant, durationMinutes: Int, onTimerFinish: () -> Unit) {
+    var currentTime by remember { mutableStateOf(Instant.now()) }
 
-    LaunchedEffect(key1 = remainingSeconds) {
-        if (remainingSeconds > 0) {
+    LaunchedEffect(key1 = startTime) {
+        while (true) {
             delay(1000)
-            remainingSeconds--
-        } else {
-            onTimerFinish()
+            currentTime = Instant.now()
+            if (Duration.between(startTime, currentTime).toMinutes() >= durationMinutes) {
+                onTimerFinish()
+                break
+            }
         }
     }
 
+    val elapsedSeconds = Duration.between(startTime, currentTime).seconds.toInt()
+    val remainingSeconds = (durationMinutes * 60) - elapsedSeconds
     val minutes = remainingSeconds / 60
     val seconds = remainingSeconds % 60
 
