@@ -42,7 +42,7 @@ fun MainContent() {
     if (isTimerRunning) {
         TimerScreen(count) {
             isTimerRunning = false
-            sendWebRequest(false, count)
+//            sendWebRequest(false, count)
         }
     } else {
         Column(
@@ -123,7 +123,7 @@ fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
 fun sendWebRequest(focused: Boolean, count: Int) {
     val baseUrl = BuildConfig.COACH_URL
     val url = if (focused) {
-        "$baseUrl?focused=true&count=$count"
+        "$baseUrl?focused=true&duration=$count"
     } else {
         "$baseUrl?focused=false"
     }
