@@ -123,9 +123,9 @@ fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
 fun sendWebRequest(focused: Boolean, count: Int) {
     val baseUrl = BuildConfig.COACH_URL
     val url = if (focused) {
-        "$baseUrl?focused=true&duration=$count"
+        "$baseUrl?focus=true&duration=${count * 60}"
     } else {
-        "$baseUrl?focused=false"
+        "$baseUrl?focus=false"
     }
 
     val request = Request.Builder()
@@ -141,7 +141,8 @@ fun sendWebRequest(focused: Boolean, count: Int) {
         override fun onResponse(call: Call, response: Response) {
             response.use {
                 if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                // Handle the response if needed
+                println("full resp: $response")
+
             }
         }
     })
