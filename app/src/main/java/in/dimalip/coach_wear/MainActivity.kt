@@ -75,7 +75,7 @@ fun FocusTime(count: Int, onIncrement: () -> Unit, onDecrement: () -> Unit) {
         )) {
             Text("-", color = Color.White)
         }
-        Text(text = count.toString(), modifier = Modifier.widthIn(min = 40.dp), color = Color.White)
+        Text(text = count.toString(), color = Color.White)
         TextButton(onClick = onIncrement, modifier = Modifier.size(40.dp), colors =  ButtonDefaults.textButtonColors(
             contentColor = Color.Red, containerColor = Color.Blue
         )) {
