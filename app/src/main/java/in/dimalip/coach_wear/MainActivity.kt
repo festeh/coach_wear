@@ -40,13 +40,19 @@ fun MainContent() {
     var isTimerRunning by remember { mutableStateOf(false) }
 
     if (isTimerRunning) {
-        TimerScreen(count) { isTimerRunning = false }
+        TimerScreen(count) {
+            isTimerRunning = false
+            sendWebRequest(false, count)
+        }
     } else {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            FocusButton(count) { isTimerRunning = true }
+            FocusButton(count) {
+                isTimerRunning = true
+                sendWebRequest(true, count)
+            }
             FocusTime(
                 count = count,
                 onIncrement = { if (count < 95) count += 5 },
@@ -112,4 +118,30 @@ fun TimerScreen(initialMinutes: Int, onTimerFinish: () -> Unit) {
         color = Color.White,
         fontSize = 25.sp
     )
+}
+
+fun sendWebRequest(focused: Boolean, count: Int) {
+    val url = if (focused) {
+        "https://foobar.com?focused=true&count=$count"
+    } else {
+        "https://foobar.com?focused=false"
+    }
+
+    val request = Request.Builder()
+        .url(url)
+        .post(RequestBody.create(null, ByteArray(0)))
+        .build()
+
+    OkHttpClient().newCall(request).enqueue(object : Callback {
+        override fun onFailure(call: Call, e: IOException) {
+            e.printStackTrace()
+        }
+
+        override fun onResponse(call: Call, response: Response) {
+            response.use {
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                // Handle the response if needed
+            }
+        }
+    })
 }
