@@ -13,9 +13,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import `in`.dimalip.coach_wear.ui.theme.Coach_wearTheme
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
+import okhttp3.*
+import java.io.IOException
 
 class MainActivity : ComponentActivity() {
+    private val client = OkHttpClient()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
