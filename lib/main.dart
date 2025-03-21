@@ -1,6 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:wear_plus/wear_plus.dart';
 
+class FocusButton extends StatelessWidget {
+  const FocusButton({
+    super.key,
+    required this.shape,
+  });
+
+  final WearShape shape;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // Focus button action
+      },
+      style: ElevatedButton.styleFrom(
+        shape: shape == WearShape.round 
+          ? const CircleBorder() 
+          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        padding: const EdgeInsets.all(16),
+      ),
+      child: const Text(
+        "Focus",
+        style: TextStyle(fontSize: 18),
+      ),
+    );
+  }
+}
+
 void main() {
   runApp(const MyApp());
 }
@@ -40,21 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Focus button action
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: shape == WearShape.round 
-                      ? const CircleBorder() 
-                      : RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.all(16),
-                  ),
-                  child: const Text(
-                    "Focus",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+                FocusButton(shape: shape),
               ],
             );
           },
