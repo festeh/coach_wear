@@ -15,6 +15,7 @@ class FocusButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(16),
+        // Button style is now defined in the theme
       ),
       child: const Text(
         "Focus",
@@ -35,8 +36,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Coach',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      theme: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark(
+          primary: Colors.deepPurple.shade300,
+          secondary: Colors.deepPurple.shade200,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepPurple.shade700,
+            foregroundColor: Colors.white,
+          ),
+        ),
       ),
       home: const MyHomePage(title: 'Coach'),
     );
@@ -56,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: WatchShape(
           builder: (context, shape, child) {
