@@ -47,10 +47,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             "$_timeRemaining",
-            style: const TextStyle(
-              fontSize: 48,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
           ),
         ),
         Container(
@@ -85,28 +82,20 @@ class _TimerDisplayState extends State<TimerDisplay> {
 }
 
 class FocusButton extends StatelessWidget {
-  const FocusButton({
-    super.key,
-  });
+  const FocusButton({super.key});
 
   Future<void> _sendFocusRequest(int duration) async {
     try {
-      // Get server address from build-time environment variable
       final serverAddress = const String.fromEnvironment('COACH_ADDR');
-      
-      // Parse the base URL
       final uri = Uri.parse(serverAddress);
-      
-      // Create a new URI with the query parameters properly added
       final requestUri = uri.replace(
         queryParameters: {
           ...uri.queryParameters, // Preserve any existing query parameters
-          'duration': duration.toString(),
+          'duration': (duration * 60).toString(),
+          'focusing': 'true',
         },
       );
-      
       final response = await http.post(requestUri);
-      
       if (response.statusCode == 200) {
         debugPrint('Request successful: ${response.body}');
       } else {
@@ -121,8 +110,9 @@ class FocusButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // Find the TimerDisplay widget to access its state
     final timerState = context.findAncestorStateOfType<_TimerDisplayState>();
-    final duration = timerState?._timeRemaining ?? 20; // Default to 20 if not found
-    
+    final duration =
+        timerState?._timeRemaining ?? 20; // Default to 20 if not found
+
     return ElevatedButton(
       onPressed: () {
         _sendFocusRequest(duration);
@@ -132,10 +122,7 @@ class FocusButton extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         // Button style is now defined in the theme
       ),
-      child: const Text(
-        "Focus",
-        style: TextStyle(fontSize: 18),
-      ),
+      child: const Text("Focus", style: TextStyle(fontSize: 18)),
     );
   }
 }
@@ -144,10 +131,12 @@ void main() {
   // Check for COACH_ADDR environment variable at startup
   final serverAddress = const String.fromEnvironment('COACH_ADDR');
   if (serverAddress.isEmpty) {
-    throw Exception('COACH_ADDR environment variable is not set. '
-        'Build with --dart-define=COACH_ADDR=https://your-server.com');
+    throw Exception(
+      'COACH_ADDR environment variable is not set. '
+      'Build with --dart-define=COACH_ADDR=https://your-server.com',
+    );
   }
-  
+
   runApp(const MyApp());
 }
 
@@ -202,7 +191,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             );
           },
-          child: const SizedBox(), // Not used as we're building directly in the builder
+          child:
+              const SizedBox(), // Not used as we're building directly in the builder
         ),
       ),
     );
