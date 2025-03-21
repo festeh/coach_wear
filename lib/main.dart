@@ -94,9 +94,18 @@ class FocusButton extends StatelessWidget {
       // Get server address from build-time environment variable
       final serverAddress = const String.fromEnvironment('COACH_ADDR');
       
-      final response = await http.post(
-        Uri.parse('$serverAddress?duration=$duration'),
+      // Parse the base URL
+      final uri = Uri.parse(serverAddress);
+      
+      // Create a new URI with the query parameters properly added
+      final requestUri = uri.replace(
+        queryParameters: {
+          ...uri.queryParameters, // Preserve any existing query parameters
+          'duration': duration.toString(),
+        },
       );
+      
+      final response = await http.post(requestUri);
       
       if (response.statusCode == 200) {
         debugPrint('Request successful: ${response.body}');
