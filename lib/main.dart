@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:wear_plus/wear_plus.dart';
 
+class TimerDisplay extends StatefulWidget {
+  const TimerDisplay({super.key});
+
+  @override
+  State<TimerDisplay> createState() => _TimerDisplayState();
+}
+
+class _TimerDisplayState extends State<TimerDisplay> {
+  final int _timeRemaining = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "$_timeRemaining",
+      style: const TextStyle(
+        fontSize: 48,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+}
+
 class FocusButton extends StatelessWidget {
   const FocusButton({
     super.key,
@@ -74,6 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const TimerDisplay(),
+                const SizedBox(height: 16),
                 const FocusButton(),
               ],
             );
