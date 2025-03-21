@@ -9,7 +9,7 @@ class TimerDisplay extends StatefulWidget {
 }
 
 class _TimerDisplayState extends State<TimerDisplay> {
-  final int _timeRemaining = 20;
+  int _timeRemaining = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,13 @@ class _TimerDisplayState extends State<TimerDisplay> {
           child: IconButton(
             icon: const Icon(Icons.remove, size: 16),
             onPressed: () {
-              // Decrease time action
+              setState(() {
+                if (_timeRemaining >= 5) {
+                  _timeRemaining -= 5;
+                } else {
+                  _timeRemaining = 0;
+                }
+              });
             },
             padding: const EdgeInsets.all(4),
             constraints: const BoxConstraints(
@@ -54,7 +60,13 @@ class _TimerDisplayState extends State<TimerDisplay> {
           child: IconButton(
             icon: const Icon(Icons.add, size: 16),
             onPressed: () {
-              // Increase time action
+              setState(() {
+                if (_timeRemaining <= 55) {
+                  _timeRemaining += 5;
+                } else {
+                  _timeRemaining = 60;
+                }
+              });
             },
             padding: const EdgeInsets.all(4),
             constraints: const BoxConstraints(
