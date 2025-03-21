@@ -13,12 +13,29 @@ class _TimerDisplayState extends State<TimerDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "$_timeRemaining",
-      style: const TextStyle(
-        fontSize: 48,
-        fontWeight: FontWeight.bold,
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.remove),
+          onPressed: () {
+            // Decrease time action
+          },
+        ),
+        Text(
+          "$_timeRemaining",
+          style: const TextStyle(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            // Increase time action
+          },
+        ),
+      ],
     );
   }
 }
