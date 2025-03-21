@@ -16,11 +16,17 @@ class _TimerDisplayState extends State<TimerDisplay> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          icon: const Icon(Icons.remove),
-          onPressed: () {
-            // Decrease time action
-          },
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade700, width: 1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.remove),
+            onPressed: () {
+              // Decrease time action
+            },
+          ),
         ),
         Text(
           "$_timeRemaining",
@@ -29,11 +35,17 @@ class _TimerDisplayState extends State<TimerDisplay> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () {
-            // Increase time action
-          },
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade700, width: 1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              // Increase time action
+            },
+          ),
         ),
       ],
     );
