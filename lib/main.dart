@@ -94,12 +94,6 @@ class FocusButton extends StatelessWidget {
       // Get server address from build-time environment variable
       final serverAddress = const String.fromEnvironment('COACH_ADDR');
       
-      // Validate that the server address is set
-      if (serverAddress.isEmpty) {
-        throw Exception('COACH_ADDR environment variable is not set. '
-            'Build with --dart-define=COACH_ADDR=https://your-server.com');
-      }
-      
       final response = await http.post(
         Uri.parse('$serverAddress?duration=$duration'),
       );
@@ -138,6 +132,13 @@ class FocusButton extends StatelessWidget {
 }
 
 void main() {
+  // Check for COACH_ADDR environment variable at startup
+  final serverAddress = const String.fromEnvironment('COACH_ADDR');
+  if (serverAddress.isEmpty) {
+    throw Exception('COACH_ADDR environment variable is not set. '
+        'Build with --dart-define=COACH_ADDR=https://your-server.com');
+  }
+  
   runApp(const MyApp());
 }
 
