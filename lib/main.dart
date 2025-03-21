@@ -22,17 +22,28 @@ class _TimerDisplayState extends State<TimerDisplay> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: IconButton(
-            icon: const Icon(Icons.remove),
+            icon: const Icon(Icons.remove, size: 16),
             onPressed: () {
               // Decrease time action
             },
+            padding: const EdgeInsets.all(4),
+            constraints: const BoxConstraints(
+              minWidth: 24,
+              minHeight: 24,
+              maxWidth: 28,
+              maxHeight: 28,
+            ),
+            iconSize: 16,
           ),
         ),
-        Text(
-          "$_timeRemaining",
-          style: const TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.bold,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            "$_timeRemaining",
+            style: const TextStyle(
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         Container(
@@ -41,10 +52,18 @@ class _TimerDisplayState extends State<TimerDisplay> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add, size: 16),
             onPressed: () {
               // Increase time action
             },
+            padding: const EdgeInsets.all(4),
+            constraints: const BoxConstraints(
+              minWidth: 24,
+              minHeight: 24,
+              maxWidth: 28,
+              maxHeight: 28,
+            ),
+            iconSize: 16,
           ),
         ),
       ],
