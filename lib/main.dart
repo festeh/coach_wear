@@ -25,7 +25,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
             icon: const Icon(Icons.remove, size: 16),
             onPressed: () {
               setState(() {
-                if (_timeRemaining >= 5) {
+                if (_timeRemaining > 5) {
                   _timeRemaining -= 5;
                 } else {
                   _timeRemaining = 0;
