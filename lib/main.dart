@@ -36,9 +36,29 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: WatchShape(
           builder: (context, shape, child) {
-            return Column(children: [child!]);
+            // Optimize layout for round watch face
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Focus button action
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: shape == WearShape.round 
+                      ? const CircleBorder() 
+                      : RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    padding: const EdgeInsets.all(16),
+                  ),
+                  child: const Text(
+                    "Focus",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ],
+            );
           },
-          child: Text("Coach!"),
+          child: const SizedBox(), // Not used as we're building directly in the builder
         ),
       ),
     );
