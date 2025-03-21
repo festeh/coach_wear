@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wear_plus/wear_plus.dart';
@@ -92,8 +91,14 @@ class FocusButton extends StatelessWidget {
 
   Future<void> _sendFocusRequest(int duration) async {
     try {
-      // Get server address from environment variable or use default
-      final serverAddress = Platform.environment['COACH_ADDR'] ?? 'https://foo.bar';
+      // Get server address from build-time environment variable
+      final serverAddress = const String.fromEnvironment('COACH_ADDR');
+      
+      // Validate that the server address is set
+      if (serverAddress.isEmpty) {
+        throw Exception('COACH_ADDR environment variable is not set. '
+            'Build with --dart-define=COACH_ADDR=https://your-server.com');
+      }
       
       final response = await http.post(
         Uri.parse('$serverAddress?duration=$duration'),
