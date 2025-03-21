@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:wear_plus/wear_plus.dart';
 
 class TimerDisplay extends StatefulWidget {
@@ -88,11 +89,31 @@ class FocusButton extends StatelessWidget {
     super.key,
   });
 
+  Future<void> _sendFocusRequest(int duration) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://foo.bar?duration=$duration'),
+      );
+      
+      if (response.statusCode == 200) {
+        debugPrint('Request successful: ${response.body}');
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error sending request: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Find the TimerDisplay widget to access its state
+    final timerState = context.findAncestorStateOfType<_TimerDisplayState>();
+    final duration = timerState?._timeRemaining ?? 20; // Default to 20 if not found
+    
     return ElevatedButton(
       onPressed: () {
-        // Focus button action
+        _sendFocusRequest(duration);
       },
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
