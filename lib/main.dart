@@ -4,10 +4,7 @@ import 'package:wear_plus/wear_plus.dart';
 class FocusButton extends StatelessWidget {
   const FocusButton({
     super.key,
-    required this.shape,
   });
-
-  final WearShape shape;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +13,7 @@ class FocusButton extends StatelessWidget {
         // Focus button action
       },
       style: ElevatedButton.styleFrom(
-        shape: shape == WearShape.round 
-          ? const CircleBorder() 
-          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(16),
       ),
       child: const Text(
@@ -68,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FocusButton(shape: shape),
+                const FocusButton(),
               ],
             );
           },
