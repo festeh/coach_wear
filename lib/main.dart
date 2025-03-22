@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:wear_plus/wear_plus.dart';
 
 class TimerDisplay extends StatefulWidget {
   const TimerDisplay({super.key});
@@ -108,7 +107,7 @@ class _FocusButtonState extends State<FocusButton> {
         setState(() {
           _isFocused = true;
         });
-        
+
         // Reset button text after 10 seconds
         Future.delayed(const Duration(seconds: 10), () {
           if (mounted) {
@@ -199,20 +198,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: WatchShape(
-          builder: (context, shape, child) {
-            // Optimize layout for round watch face
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const TimerDisplay(),
-                const SizedBox(height: 16),
-                const FocusButton(),
-              ],
-            );
-          },
-          child:
-              const SizedBox(), // Not used as we're building directly in the builder
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const TimerDisplay(),
+            const SizedBox(height: 16),
+            const FocusButton(),
+          ],
         ),
       ),
     );
