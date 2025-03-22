@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
 
+// Create a callback type for when the timer changes
+typedef TimerChangeCallback = void Function(int duration);
+
 class TimerDisplay extends StatefulWidget {
-  const TimerDisplay({super.key});
+  final int initialValue;
+  final TimerChangeCallback? onTimerChanged;
+  
+  const TimerDisplay({
+    super.key, 
+    this.initialValue = 20,
+    this.onTimerChanged,
+  });
 
   @override
-  State<TimerDisplay> createState() => _TimerDisplayState();
+  State<TimerDisplay> createState() => TimerDisplayState();
 }
 
-class _TimerDisplayState extends State<TimerDisplay> {
-  int _timeRemaining = 20;
+// Make the state public so it can be accessed
+class TimerDisplayState extends State<TimerDisplay> {
+  late int _timeRemaining;
+  
+  @override
+  void initState() {
+    super.initState();
+    _timeRemaining = widget.initialValue;
+  }
 
   // Getter to expose the time remaining to other widgets
   int get timeRemaining => _timeRemaining;
@@ -32,6 +49,8 @@ class _TimerDisplayState extends State<TimerDisplay> {
                 } else {
                   _timeRemaining = 0;
                 }
+                // Notify listeners when the timer changes
+                widget.onTimerChanged?.call(_timeRemaining);
               });
             },
             padding: const EdgeInsets.all(4),
@@ -65,6 +84,8 @@ class _TimerDisplayState extends State<TimerDisplay> {
                 } else {
                   _timeRemaining = 60;
                 }
+                // Notify listeners when the timer changes
+                widget.onTimerChanged?.call(_timeRemaining);
               });
             },
             padding: const EdgeInsets.all(4),

@@ -11,6 +11,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // Shared state for the timer duration
+  int _currentDuration = 20;
+
+  void _handleTimerChanged(int newDuration) {
+    setState(() {
+      _currentDuration = newDuration;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +28,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const TimerDisplay(),
+            TimerDisplay(
+              initialValue: _currentDuration,
+              onTimerChanged: _handleTimerChanged,
+            ),
             const SizedBox(height: 16),
-            const FocusButton(),
+            FocusButton(duration: _currentDuration),
           ],
         ),
       ),

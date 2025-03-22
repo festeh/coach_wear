@@ -3,7 +3,12 @@ import 'package:http/http.dart' as http;
 import 'timer_display.dart';
 
 class FocusButton extends StatefulWidget {
-  const FocusButton({super.key});
+  final int duration;
+  
+  const FocusButton({
+    super.key,
+    required this.duration,
+  });
 
   @override
   State<FocusButton> createState() => _FocusButtonState();
@@ -48,13 +53,8 @@ class _FocusButtonState extends State<FocusButton> {
 
   @override
   Widget build(BuildContext context) {
-    // Find the TimerDisplay widget to access its state
-    final timerState = context.findAncestorStateOfType<_TimerDisplayState>();
-    final duration =
-        timerState?.timeRemaining ?? 20; // Default to 20 if not found
-
     return ElevatedButton(
-      onPressed: _isFocused ? null : () => _sendFocusRequest(duration),
+      onPressed: _isFocused ? null : () => _sendFocusRequest(widget.duration),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(16),
